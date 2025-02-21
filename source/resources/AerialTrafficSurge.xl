@@ -8,3 +8,6 @@ quest:
       parent: base\quest\cyberpunk2077.quest
     - path: ats\av_traffic_surge.questphase
       parent: ep1\quest\ep1_standalone.quest
+localization:
+  onscreens:
+    en-us: ats\localization\en-us.json

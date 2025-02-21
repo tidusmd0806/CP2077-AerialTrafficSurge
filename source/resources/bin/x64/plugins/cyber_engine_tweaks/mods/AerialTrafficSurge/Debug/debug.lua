@@ -16,8 +16,6 @@ function Debug:ImGuiMain()
     ImGui.Text("Version : " .. ATS.version)
 
     self:SetObserver()
-    self:SetLogLevel()
-    self:SelectPrintDebug()
     self:ImGuiRelativePosition(-2247.4231, -406.2932, 24.5819)
     self:ImGuiPlayerPosition()
     self:ImGuiFactValue()
@@ -40,42 +38,6 @@ function Debug:SetObserver()
 
 end
 
-function Debug:SetLogLevel()
-    function GetKeyFromValue(table_, target_value)
-        for key, value in pairs(table_) do
-            if value == target_value then
-                return key
-            end
-        end
-        return nil
-    end
-    function GetKeys(table_)
-        local keys = {}
-        for key, _ in pairs(table_) do
-            table.insert(keys, key)
-        end
-        return keys
-     end
-    local selected = false
-    if ImGui.BeginCombo("LogLevel", GetKeyFromValue(LogLevel, MasterLogLevel)) then
-		for _, key in ipairs(GetKeys(LogLevel)) do
-			if GetKeyFromValue(LogLevel, MasterLogLevel) == key then
-				selected = true
-			else
-				selected = false
-			end
-			if(ImGui.Selectable(key, selected)) then
-				MasterLogLevel = LogLevel[key]
-			end
-		end
-		ImGui.EndCombo()
-	end
-end
-
-function Debug:SelectPrintDebug()
-    PrintDebugMode = ImGui.Checkbox("Print Debug Mode", PrintDebugMode)
-end
-
 function Debug:ImGuiRelativePosition(x, y, z)
     local player = Game.GetPlayer()
     if player == nil then
@@ -93,9 +55,11 @@ function Debug:ImGuiFactValue()
     if fact_db == nil then
         return
     end
+    local ats_av_traffic_debug = fact_db:GetFactStr("ats_av_traffic_debug")
     local ats_av_traffic_start = fact_db:GetFactStr("ats_av_traffic_start")
     local ats_av_traffic_loop = fact_db:GetFactStr("ats_av_traffic_loop")
     local ats_av_traffic_reset = fact_db:GetFactStr("ats_av_traffic_reset")
+    ImGui.Text("ats_av_traffic_debug : " .. ats_av_traffic_debug)
     ImGui.Text("ats_av_traffic_start : " .. ats_av_traffic_start)
     ImGui.Text("ats_av_traffic_loop : " .. ats_av_traffic_loop)
     ImGui.Text("ats_av_traffic_reset : " .. ats_av_traffic_reset)
@@ -117,21 +81,14 @@ function Debug:ImGuiPlayerPosition()
 end
 
 function Debug:ImGuiExcuteFunction()
-    if ImGui.Button("TF1") then
-        -- local player_pos = Game.GetPlayer():GetWorldPosition()
-        -- local player_angle = Game.GetPlayer():GetWorldOrientation():ToEulerAngles()
-        -- local loc_pos = Vector4.new(player_pos.x, player_pos.y, player_pos.z, 1)
-        -- local loc_angle = EulerAngles.new(player_angle.roll, player_angle.pitch, player_angle.yaw)
-        -- Game.GetTeleportationFacility():Teleport(Game.GetPlayer(), Vector4.new(-1381.9889, 1271.9109, 123.064896, 1), EulerAngles.new(0, 0, 0))
-        -- Cron.After(6, function()
-        --     print("Teleport")
-        --     Game.GetTeleportationFacility():Teleport(Game.GetPlayer(), loc_pos, loc_angle)
-        -- end)
-        print("Excute Test Function 1")
+    if ImGui.Button("Start") then
+        StartLoop()
+        print("Loop Start")
     end
     ImGui.SameLine()
-    if ImGui.Button("TF2") then
-        print("Excute Test Function 2")
+    if ImGui.Button("Stop") then
+        StopLoop()
+        print("Loop Stop")
     end
 
 end
