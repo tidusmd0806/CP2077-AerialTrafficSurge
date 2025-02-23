@@ -3,7 +3,7 @@
     "WolvenKitVersion": "8.16.0",
     "WKitJsonVersion": "0.0.9",
     "GameVersion": 2200,
-    "ExportedDateTime": "2025-02-19T16:25:49.2874364Z",
+    "ExportedDateTime": "2025-02-23T14:25:58.5720138Z",
     "DataType": "CR2W",
     "ArchiveFileName": "E:\\Game\\cyberpunk_mod\\Y_\u30AF\u30EA\u30A8\u30A4\u30C8\\AerialTrafficSurge\\source\\archive\\ats\\av_traffic_route.streamingsector"
   },
@@ -2188,6 +2188,150 @@
             "Uk12": 0,
             "Uk13": "0",
             "Uk14": "0"
+          },
+          {
+            "Id": "0",
+            "NodeIndex": 30,
+            "Position": {
+              "$type": "Vector4",
+              "W": 0,
+              "X": -403.496185,
+              "Y": 1633.74268,
+              "Z": 81.5736008
+            },
+            "Orientation": {
+              "$type": "Quaternion",
+              "i": 0,
+              "j": 0,
+              "k": 0,
+              "r": 1
+            },
+            "Scale": {
+              "$type": "Vector3",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "Pivot": {
+              "$type": "Vector3",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "Bounds": {
+              "$type": "Box",
+              "Max": {
+                "$type": "Vector4",
+                "W": 0,
+                "X": -1872.10156,
+                "Y": -1884.80676,
+                "Z": 74.6001968
+              },
+              "Min": {
+                "$type": "Vector4",
+                "W": 0,
+                "X": -1872.10156,
+                "Y": -1884.80676,
+                "Z": 74.6001968
+              }
+            },
+            "QuestPrefabRefHash": {
+              "$type": "NodeRef",
+              "$storage": "string",
+              "$value": "$/mod/av_traffic_route/#r_16_1_to_2"
+            },
+            "UkHash1": {
+              "$type": "NodeRef",
+              "$storage": "uint64",
+              "$value": "0"
+            },
+            "CookedPrefabData": {
+              "DepotPath": {
+                "$type": "ResourcePath",
+                "$storage": "uint64",
+                "$value": "0"
+              },
+              "Flags": "Default"
+            },
+            "MaxStreamingDistance": 3.40282347E+38,
+            "UkFloat1": 3272.59229,
+            "Uk10": 288,
+            "Uk11": 512,
+            "Uk12": 0,
+            "Uk13": "0",
+            "Uk14": "0"
+          },
+          {
+            "Id": "0",
+            "NodeIndex": 31,
+            "Position": {
+              "$type": "Vector4",
+              "W": 0,
+              "X": -1210.76135,
+              "Y": 1298.52332,
+              "Z": 60.5866013
+            },
+            "Orientation": {
+              "$type": "Quaternion",
+              "i": 0,
+              "j": 0,
+              "k": 0,
+              "r": 1
+            },
+            "Scale": {
+              "$type": "Vector3",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "Pivot": {
+              "$type": "Vector3",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "Bounds": {
+              "$type": "Box",
+              "Max": {
+                "$type": "Vector4",
+                "W": 0,
+                "X": -1872.10156,
+                "Y": -1884.80676,
+                "Z": 74.6001968
+              },
+              "Min": {
+                "$type": "Vector4",
+                "W": 0,
+                "X": -1872.10156,
+                "Y": -1884.80676,
+                "Z": 74.6001968
+              }
+            },
+            "QuestPrefabRefHash": {
+              "$type": "NodeRef",
+              "$storage": "string",
+              "$value": "$/mod/av_traffic_route/#r_16_2_to_1"
+            },
+            "UkHash1": {
+              "$type": "NodeRef",
+              "$storage": "uint64",
+              "$value": "0"
+            },
+            "CookedPrefabData": {
+              "DepotPath": {
+                "$type": "ResourcePath",
+                "$storage": "uint64",
+                "$value": "0"
+              },
+              "Flags": "Default"
+            },
+            "MaxStreamingDistance": 3.40282347E+38,
+            "UkFloat1": 3272.59229,
+            "Uk10": 288,
+            "Uk11": 512,
+            "Uk12": 0,
+            "Uk13": "0",
+            "Uk14": "0"
           }
         ]
       },
@@ -2341,6 +2485,16 @@
           "$type": "NodeRef",
           "$storage": "string",
           "$value": "$/mod/av_traffic_route/#r_15_2_to_1"
+        },
+        {
+          "$type": "NodeRef",
+          "$storage": "string",
+          "$value": "$/mod/av_traffic_route/#r_16_1_to_2"
+        },
+        {
+          "$type": "NodeRef",
+          "$storage": "string",
+          "$value": "$/mod/av_traffic_route/#r_16_2_to_1"
         }
       ],
       "nodes": [
@@ -27792,7 +27946,7 @@
               },
               {
                 "$type": "worldSpeedSplineNodeOrientationChangeSection",
-                "pos": 4219,
+                "pos": 2820,
                 "targetOrientation": {
                   "$type": "EulerAngles",
                   "Pitch": 0,
@@ -27803,18 +27957,7 @@
               },
               {
                 "$type": "worldSpeedSplineNodeOrientationChangeSection",
-                "pos": 4220,
-                "targetOrientation": {
-                  "$type": "EulerAngles",
-                  "Pitch": 0,
-                  "Roll": 0,
-                  "Yaw": -2.05999994
-                },
-                "type": "KeepRoll_WorldSpacePitchYaw"
-              },
-              {
-                "$type": "worldSpeedSplineNodeOrientationChangeSection",
-                "pos": 4235,
+                "pos": 2821,
                 "targetOrientation": {
                   "$type": "EulerAngles",
                   "Pitch": 0,
@@ -27842,14 +27985,14 @@
               },
               {
                 "$type": "worldSpeedSplineNodeSpeedChangeSection",
-                "end": 4220,
-                "start": 4180,
+                "end": 2820,
+                "start": 2780,
                 "targetSpeed_M_P_S": 10
               },
               {
                 "$type": "worldSpeedSplineNodeSpeedChangeSection",
-                "end": 4300,
-                "start": 4240,
+                "end": 2900,
+                "start": 2840,
                 "targetSpeed_M_P_S": 0.100000001
               }
             ],
@@ -28909,7 +29052,7 @@
               },
               {
                 "$type": "worldSpeedSplineNodeOrientationChangeSection",
-                "pos": 4220,
+                "pos": 2330,
                 "targetOrientation": {
                   "$type": "EulerAngles",
                   "Pitch": 0,
@@ -28920,7 +29063,18 @@
               },
               {
                 "$type": "worldSpeedSplineNodeOrientationChangeSection",
-                "pos": 4221,
+                "pos": 2331,
+                "targetOrientation": {
+                  "$type": "EulerAngles",
+                  "Pitch": 0,
+                  "Roll": 0,
+                  "Yaw": -125.690002
+                },
+                "type": "KeepRoll_WorldSpacePitchYaw"
+              },
+              {
+                "$type": "worldSpeedSplineNodeOrientationChangeSection",
+                "pos": 2350,
                 "targetOrientation": {
                   "$type": "EulerAngles",
                   "Pitch": 0,
@@ -28944,18 +29098,18 @@
                 "$type": "worldSpeedSplineNodeSpeedChangeSection",
                 "end": 70,
                 "start": 20,
-                "targetSpeed_M_P_S": 50
+                "targetSpeed_M_P_S": 40
               },
               {
                 "$type": "worldSpeedSplineNodeSpeedChangeSection",
-                "end": 4220,
-                "start": 4180,
+                "end": 2330,
+                "start": 2280,
                 "targetSpeed_M_P_S": 10
               },
               {
                 "$type": "worldSpeedSplineNodeSpeedChangeSection",
-                "end": 4300,
-                "start": 4240,
+                "end": 2410,
+                "start": 2350,
                 "targetSpeed_M_P_S": 0.100000001
               }
             ],
@@ -29886,6 +30040,338 @@
                       "X": 1496.65308,
                       "Y": 998.897827,
                       "Z": 2.31069994
+                    },
+                    "rotation": {
+                      "$type": "Quaternion",
+                      "i": 0,
+                      "j": 0,
+                      "k": 0,
+                      "r": 1
+                    },
+                    "tangents": {
+                      "Elements": [
+                        {
+                          "$type": "Vector3",
+                          "X": 0,
+                          "Y": 0,
+                          "Z": 0
+                        },
+                        {
+                          "$type": "Vector3",
+                          "X": 0,
+                          "Y": 0,
+                          "Z": 0
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "reversed": 0
+              }
+            },
+            "tag": "None",
+            "tagExt": "None",
+            "useDeprecated": 0
+          }
+        },
+        {
+          "HandleId": "60",
+          "Data": {
+            "$type": "worldSpeedSplineNode",
+            "debugName": {
+              "$type": "CName",
+              "$storage": "string",
+              "$value": "r_16_1_to_2"
+            },
+            "deprecatedDefaultAdjustTime": 0,
+            "deprecatedDefaultSpeed": 0,
+            "deprecatedSpeedRestrictions": [],
+            "destSnapedNode": {
+              "$type": "NodeRef",
+              "$storage": "uint64",
+              "$value": "0"
+            },
+            "destSnapedSocketName": {
+              "$type": "CName",
+              "$storage": "string",
+              "$value": "None"
+            },
+            "entrySnapedNode": {
+              "$type": "NodeRef",
+              "$storage": "uint64",
+              "$value": "0"
+            },
+            "entrySnapedSocketName": {
+              "$type": "CName",
+              "$storage": "string",
+              "$value": "None"
+            },
+            "ignoreTerrain": 0,
+            "isHostOnly": 0,
+            "isVisibleInGame": 1,
+            "orientationChangeSections": [
+              {
+                "$type": "worldSpeedSplineNodeOrientationChangeSection",
+                "pos": 0,
+                "targetOrientation": {
+                  "$type": "EulerAngles",
+                  "Pitch": 0,
+                  "Roll": 0,
+                  "Yaw": -60.3699989
+                },
+                "type": "KeepRoll_WorldSpacePitchYaw"
+              },
+              {
+                "$type": "worldSpeedSplineNodeOrientationChangeSection",
+                "pos": 16,
+                "targetOrientation": {
+                  "$type": "EulerAngles",
+                  "Pitch": 0,
+                  "Roll": 0,
+                  "Yaw": 0
+                },
+                "type": "UseSplineOrientation"
+              },
+              {
+                "$type": "worldSpeedSplineNodeOrientationChangeSection",
+                "pos": 2820,
+                "targetOrientation": {
+                  "$type": "EulerAngles",
+                  "Pitch": 0,
+                  "Roll": 0,
+                  "Yaw": 0
+                },
+                "type": "UseSplineOrientation"
+              },
+              {
+                "$type": "worldSpeedSplineNodeOrientationChangeSection",
+                "pos": 2821,
+                "targetOrientation": {
+                  "$type": "EulerAngles",
+                  "Pitch": 0,
+                  "Roll": 0,
+                  "Yaw": -2.05999994
+                },
+                "type": "KeepRoll_WorldSpacePitchYaw"
+              }
+            ],
+            "proxyScale": null,
+            "roadAdjustmentFactorChangeSections": [],
+            "sourcePrefabHash": "0",
+            "speedChangeSections": [
+              {
+                "$type": "worldSpeedSplineNodeSpeedChangeSection",
+                "end": 12,
+                "start": 0,
+                "targetSpeed_M_P_S": 10
+              },
+              {
+                "$type": "worldSpeedSplineNodeSpeedChangeSection",
+                "end": 70,
+                "start": 20,
+                "targetSpeed_M_P_S": 40
+              },
+              {
+                "$type": "worldSpeedSplineNodeSpeedChangeSection",
+                "end": 2820,
+                "start": 2780,
+                "targetSpeed_M_P_S": 10
+              },
+              {
+                "$type": "worldSpeedSplineNodeSpeedChangeSection",
+                "end": 2900,
+                "start": 2840,
+                "targetSpeed_M_P_S": 0.100000001
+              }
+            ],
+            "splineData": {
+              "HandleId": "61",
+              "Data": {
+                "$type": "Spline",
+                "hasDirection": 1,
+                "looped": 0,
+                "points":[{"$type":"SplinePoint","automaticTangents":1,"continuousTangents":1,"id":0,"position":{"$type":"Vector3","X":0.000000,"Y":0.000000,"Z":0.000000},"rotation":{"$type":"Quaternion","r":1,"i":0,"j":0,"k":0},"tangents":{"Elements":[{"$type":"Vector3","X":0,"Y":0,"Z":0},{"$type":"Vector3","X":0,"Y":0,"Z":0}]}},{"$type":"SplinePoint","automaticTangents":1,"continuousTangents":1,"id":0,"position":{"$type":"Vector3","X":-1219.498291,"Y":1300.554077,"Z":60.000008},"rotation":{"$type":"Quaternion","r":1,"i":0,"j":0,"k":0},"tangents":{"Elements":[{"$type":"Vector3","X":0,"Y":0,"Z":0},{"$type":"Vector3","X":0,"Y":0,"Z":0}]}},{"$type":"SplinePoint","automaticTangents":1,"continuousTangents":1,"id":0,"position":{"$type":"Vector3","X":0.000000,"Y":0.000000,"Z":0.000000},"rotation":{"$type":"Quaternion","r":1,"i":0,"j":0,"k":0},"tangents":{"Elements":[{"$type":"Vector3","X":0,"Y":0,"Z":0},{"$type":"Vector3","X":0,"Y":0,"Z":0}]}}],
+                "reversed": 0
+              }
+            },
+            "tag": "None",
+            "tagExt": "None",
+            "useDeprecated": 0
+          }
+        },
+        {
+          "HandleId": "62",
+          "Data": {
+            "$type": "worldSpeedSplineNode",
+            "debugName": {
+              "$type": "CName",
+              "$storage": "string",
+              "$value": "r_16_2_to_1"
+            },
+            "deprecatedDefaultAdjustTime": 0,
+            "deprecatedDefaultSpeed": 0,
+            "deprecatedSpeedRestrictions": [],
+            "destSnapedNode": {
+              "$type": "NodeRef",
+              "$storage": "uint64",
+              "$value": "0"
+            },
+            "destSnapedSocketName": {
+              "$type": "CName",
+              "$storage": "string",
+              "$value": "None"
+            },
+            "entrySnapedNode": {
+              "$type": "NodeRef",
+              "$storage": "uint64",
+              "$value": "0"
+            },
+            "entrySnapedSocketName": {
+              "$type": "CName",
+              "$storage": "string",
+              "$value": "None"
+            },
+            "ignoreTerrain": 0,
+            "isHostOnly": 0,
+            "isVisibleInGame": 1,
+            "orientationChangeSections": [
+              {
+                "$type": "worldSpeedSplineNodeOrientationChangeSection",
+                "pos": 0,
+                "targetOrientation": {
+                  "$type": "EulerAngles",
+                  "Pitch": 0,
+                  "Roll": 0,
+                  "Yaw": -2.05999994
+                },
+                "type": "KeepRoll_WorldSpacePitchYaw"
+              },
+              {
+                "$type": "worldSpeedSplineNodeOrientationChangeSection",
+                "pos": 16,
+                "targetOrientation": {
+                  "$type": "EulerAngles",
+                  "Pitch": 0,
+                  "Roll": 0,
+                  "Yaw": 0
+                },
+                "type": "UseSplineOrientation"
+              },
+              {
+                "$type": "worldSpeedSplineNodeOrientationChangeSection",
+                "pos": 2330,
+                "targetOrientation": {
+                  "$type": "EulerAngles",
+                  "Pitch": 0,
+                  "Roll": 0,
+                  "Yaw": 0
+                },
+                "type": "UseSplineOrientation"
+              },
+              {
+                "$type": "worldSpeedSplineNodeOrientationChangeSection",
+                "pos": 2331,
+                "targetOrientation": {
+                  "$type": "EulerAngles",
+                  "Pitch": 0,
+                  "Roll": 0,
+                  "Yaw": -125.690002
+                },
+                "type": "KeepRoll_WorldSpacePitchYaw"
+              },
+              {
+                "$type": "worldSpeedSplineNodeOrientationChangeSection",
+                "pos": 2350,
+                "targetOrientation": {
+                  "$type": "EulerAngles",
+                  "Pitch": 0,
+                  "Roll": 0,
+                  "Yaw": -125.690002
+                },
+                "type": "KeepRoll_WorldSpacePitchYaw"
+              }
+            ],
+            "proxyScale": null,
+            "roadAdjustmentFactorChangeSections": [],
+            "sourcePrefabHash": "0",
+            "speedChangeSections": [
+              {
+                "$type": "worldSpeedSplineNodeSpeedChangeSection",
+                "end": 12,
+                "start": 0,
+                "targetSpeed_M_P_S": 10
+              },
+              {
+                "$type": "worldSpeedSplineNodeSpeedChangeSection",
+                "end": 70,
+                "start": 20,
+                "targetSpeed_M_P_S": 40
+              },
+              {
+                "$type": "worldSpeedSplineNodeSpeedChangeSection",
+                "end": 2330,
+                "start": 2280,
+                "targetSpeed_M_P_S": 10
+              },
+              {
+                "$type": "worldSpeedSplineNodeSpeedChangeSection",
+                "end": 2410,
+                "start": 2350,
+                "targetSpeed_M_P_S": 0.100000001
+              }
+            ],
+            "splineData": {
+              "HandleId": "63",
+              "Data": {
+                "$type": "Spline",
+                "hasDirection": 1,
+                "looped": 0,
+                "points": [
+                  {
+                    "$type": "SplinePoint",
+                    "automaticTangents": 0,
+                    "continuousTangents": 0,
+                    "id": 0,
+                    "position": {
+                      "$type": "Vector3",
+                      "X": 0,
+                      "Y": 0,
+                      "Z": 0
+                    },
+                    "rotation": {
+                      "$type": "Quaternion",
+                      "i": 0,
+                      "j": 0,
+                      "k": 0,
+                      "r": 1
+                    },
+                    "tangents": {
+                      "Elements": [
+                        {
+                          "$type": "Vector3",
+                          "X": 0,
+                          "Y": 0,
+                          "Z": 0
+                        },
+                        {
+                          "$type": "Vector3",
+                          "X": 0,
+                          "Y": 0,
+                          "Z": 0
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "$type": "SplinePoint",
+                    "automaticTangents": 0,
+                    "continuousTangents": 0,
+                    "id": 0,
+                    "position": {
+                      "$type": "Vector3",
+                      "X": 0.119999997,
+                      "Y": 1.09000003,
+                      "Z": 0
                     },
                     "rotation": {
                       "$type": "Quaternion",

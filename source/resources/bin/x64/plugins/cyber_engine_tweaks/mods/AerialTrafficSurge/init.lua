@@ -18,8 +18,11 @@ ATS = {
     setting_path = "user_settings.json",
     native_settings_required_version = 1.96,
     delay_updating_native_settings = 0.1,
-    default_number_of_av = 15,
-    max_number_of_av = 15,
+    max_number_of_av = 16,
+    default_setting_table = {
+        version = "",
+        number_of_av = 16,
+    },
     -- dynamic --
     debug_obj = nil,
     setting_table = {},
@@ -54,6 +57,11 @@ registerForEvent('onInit', function()
 
     ATS.debug_obj = Debug:New()
 
+    LoadSettings()
+    CompareVersion()
+    SetParameter()
+    CheckNativeSettings()
+
     GameUI.Observe("SessionStart", function()
         if ATS.is_debug_mode then
             Game.GetQuestsSystem():SetFactStr("ats_av_traffic_debug", 1)
@@ -61,22 +69,11 @@ registerForEvent('onInit', function()
             Game.GetQuestsSystem():SetFactStr("ats_av_traffic_debug", 0)
         end
 
-        -- Create setting file
-        if io.open(ATS.setting_path, "a") then
-            io.close()
-        end
-
-        LoadSettings()
-        CompareVersion()
-        SetParameter()
-
         if ATS.is_update_version or not IsTrafficLoop() then
             StartLoop()
         end
 
     end)
-
-    CheckNativeSettings()
 
     if ATS.is_valid_native_settings then
 		CreateNativeSettingsBasePage()
@@ -100,6 +97,7 @@ function IsTrafficLoop()
 end
 
 function StartLoop()
+    ManageNumberOfAV()
     Game.GetQuestsSystem():SetFactStr("ats_av_traffic_start", 1)
 end
 
@@ -107,25 +105,67 @@ function StopLoop()
     Game.GetQuestsSystem():SetFactStr("ats_av_traffic_reset", 1)
 end
 
+function ManageNumberOfAV()
+    local selected_numbers = {}
+    local count = ATS.max_number_of_av - ATS.setting_table.number_of_av
+    local range = ATS.max_number_of_av
+    local total_lock_count = 0
+
+    if count < range / 2 then
+        for i = 1, range do
+            selected_numbers[i] = false
+        end
+        while total_lock_count < count do
+            local random_number = math.random(1, range)
+            if not selected_numbers[random_number] then
+                selected_numbers[random_number] = true
+                total_lock_count = total_lock_count + 1
+            end
+        end
+    else
+        total_lock_count = range
+        for i = 1, range do
+            selected_numbers[i] = true
+        end
+        while total_lock_count > count do
+            local random_number = math.random(1, range)
+            if selected_numbers[random_number] then
+                selected_numbers[random_number] = false
+                total_lock_count = total_lock_count - 1
+            end
+        end
+    end
+
+    for i = 1, range do
+        if not selected_numbers[i] then
+            Game.GetQuestsSystem():SetFactStr("ats_av_traffic_lock_" .. i, 0)
+        else
+            Game.GetQuestsSystem():SetFactStr("ats_av_traffic_lock_" .. i, 1)
+        end
+    end
+end
+
 function LoadSettings()
-    ATS.setting_table = ReadJson(ATS.setting_path)
+    local table = ReadJson(ATS.setting_path)
+    if table == nil then
+        ATS.setting_table = {}
+    else
+        ATS.setting_table = table
+    end
 end
 
 function CompareVersion()
-    if ATS.setting_table == nil or ATS.setting_table.version ~= ATS.version then
+    if ATS.setting_table.version == nil or ATS.setting_table.version ~= ATS.version then
         ATS.is_update_version = true
-        if ATS.setting_table.version == nil then
-            table.insert(ATS.setting_table, {version = ATS.version})
-        else
-            ATS.setting_table.version = ATS.version
-        end
+        ATS.setting_table.version = ATS.version
         WriteJson(ATS.setting_path, ATS.setting_table)
     end
 end
 
 function SetParameter()
     if ATS.setting_table.number_of_av == nil then
-        table.insert(ATS.setting_table, {number_of_av = ATS.default_number_of_av})
+        ATS.setting_table.number_of_av = ATS.default_setting_table.number_of_av
+        WriteJson(ATS.setting_path, ATS.setting_table)
     end
 end
 
@@ -185,7 +225,7 @@ function CreateNativeSettingsPage()
 	local option_table
 
 	-- general
-    option_table = ATS.native_settings_mod.addRangeInt("/ATS/general", GetLocalizedText(LocKeyToString("ats-general-number-of-av-item")), GetLocalizedText(LocKeyToString("ats-general-number-of-av-description")), 0, ATS.max_number_of_av, 1, ATS.setting_table.number_of_av, ATS.default_number_of_av, function(value)
+    option_table = ATS.native_settings_mod.addRangeInt("/ATS/general", GetLocalizedText(LocKeyToString("ats-general-number-of-av-item")), GetLocalizedText(LocKeyToString("ats-general-number-of-av-description")), 0, ATS.max_number_of_av, 1, ATS.setting_table.number_of_av, ATS.default_setting_table.number_of_av, function(value)
         ATS.setting_table.number_of_av = value
         WriteJson(ATS.setting_path, ATS.setting_table)
         Cron.After(ATS.delay_updating_native_settings, function()
@@ -193,6 +233,11 @@ function CreateNativeSettingsPage()
 		end)
 	end)
 	table.insert(ATS.option_table_list, option_table)
+
+    option_table = ATS.native_settings_mod.addButton("/ATS/general", GetLocalizedText(LocKeyToString("ats-general-apply-settings")), GetLocalizedText(LocKeyToString("ats-general-apply-settings-description")), GetLocalizedText(LocKeyToString("ats-general-apply-settings-button-label")), 45, function()
+        StartLoop()
+    end)
+    table.insert(ATS.option_table_list, option_table)
 end
 
 --- Clear setting items.
@@ -220,6 +265,9 @@ function ResetParameters()
 	if not ATS.is_valid_native_settings then
 		return
 	end
+    ATS.setting_table = ATS.default_setting_table
+    ATS.setting_table.version = ATS.version
+    WriteJson(ATS.setting_path, ATS.setting_table)
 end
 
 --- Read json file.
@@ -232,11 +280,13 @@ function ReadJson(fill_path)
             file:close()
             return data
        else
+            print("[ATS][Info] File not found: " .. fill_path)
             return {}
        end
     end)
     if not success then
-        return {}
+        print("[ATS][Error] Unexpected error while reading file: " .. fill_path)
+        return nil
     end
     return result
 end
@@ -251,10 +301,12 @@ local success, result = pcall(function()
         file:close()
         return true
     else
+        print("[ATS][Error] Failed to write file: " .. fill_path)
         return false
     end
 end)
 if not success then
+    print("[ATS][Error] Unexpected error while writing file: " .. fill_path)
     return false
 end
 return result
