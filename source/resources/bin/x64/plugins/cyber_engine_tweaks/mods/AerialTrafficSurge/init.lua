@@ -58,7 +58,6 @@ registerForEvent('onInit', function()
     ATS.debug_obj = Debug:New()
 
     LoadSettings()
-    CompareVersion()
     SetParameter()
     CheckNativeSettings()
 
@@ -67,6 +66,15 @@ registerForEvent('onInit', function()
             Game.GetQuestsSystem():SetFactStr("ats_av_traffic_debug", 1)
         elseif Game.GetQuestsSystem():GetFactStr("ats_av_traffic_debug") == 1 then
             Game.GetQuestsSystem():SetFactStr("ats_av_traffic_debug", 0)
+        end
+
+        local saved_version = Game.GetQuestsSystem():GetFactStr("ats_av_traffic_version")
+        local current_version = VersionToInt(ATS.version)
+        if saved_version ~= current_version then
+            Game.GetQuestsSystem():SetFactStr("ats_av_traffic_version", current_version)
+            ATS.is_update_version = true
+        else
+            ATS.is_update_version = false
         end
 
         if ATS.is_update_version or not IsTrafficLoop() then
@@ -154,15 +162,11 @@ function LoadSettings()
     end
 end
 
-function CompareVersion()
+function SetParameter()
     if ATS.setting_table.version == nil or ATS.setting_table.version ~= ATS.version then
-        ATS.is_update_version = true
         ATS.setting_table.version = ATS.version
         WriteJson(ATS.setting_path, ATS.setting_table)
     end
-end
-
-function SetParameter()
     if ATS.setting_table.number_of_av == nil then
         ATS.setting_table.number_of_av = ATS.default_setting_table.number_of_av
         WriteJson(ATS.setting_path, ATS.setting_table)
@@ -181,6 +185,18 @@ function CheckNativeSettings()
         return
     end
     ATS.is_valid_native_settings = true
+end
+
+function VersionToInt(version)
+    local parts = {}
+    for part in version:gmatch("%d+") do
+        table.insert(parts, tonumber(part))
+    end
+    local result = 0
+    for i, part in ipairs(parts) do
+        result = result * 100 + part
+    end
+    return result
 end
 
 --- Create Native Settings Base Page.

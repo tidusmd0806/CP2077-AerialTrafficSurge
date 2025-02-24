@@ -74,6 +74,7 @@ function Debug:ImGuiMain()
 
     ImGui.Begin("ATS DEBUG WINDOW")
     ImGui.Text("Version : " .. ATS.version)
+    ImGui.Text("Saved Version : " .. Game.GetQuestsSystem():GetFactStr("ats_av_traffic_version"))
 
     self:SetObserver()
     self:ImGuiInputSplineBasePosition()
