@@ -11,17 +11,17 @@ local Debug = require('Debug/debug.lua')
 ATS = {
     -- static --
     description = "Aerial Traffic Surge",
-    version = "1.0.0",
+    version = "1.1.0",
     is_ready = false,
     is_debug_mode = false,
     is_update_version = false,
     setting_path = "user_settings.json",
     native_settings_required_version = 1.96,
     delay_updating_native_settings = 0.1,
-    max_number_of_av = 25,
+    max_number_of_av = 27,
     default_setting_table = {
         version = "",
-        number_of_av = 25,
+        number_of_av = 27,
     },
     -- dynamic --
     debug_obj = nil,
@@ -80,7 +80,6 @@ registerForEvent('onInit', function()
         if ATS.is_update_version or not IsTrafficLoop() then
             StartLoop()
         end
-
     end)
 
     if ATS.is_valid_native_settings then

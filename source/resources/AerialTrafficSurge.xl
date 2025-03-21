@@ -12,3 +12,4 @@ localization:
   onscreens:
     en-us: ats\localization\en-us.json
     jp-jp: ats\localization\jp-jp.json
+    ru-ru: ats\localization\ru-ru.json

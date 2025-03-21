@@ -16,6 +16,8 @@ def parse_json_and_calculate_distances(json_data):
     absolute_positions = []
 
     for node in nodes:
+        if len(node_data) <= index:
+            break
         base_position = node_data[index]['Position']
         index = index + 1
         base_x, base_y, base_z = base_position['X'], base_position['Y'], base_position['Z']
@@ -46,7 +48,7 @@ def save_to_csv(data, output_file, headers):
             writer.writerow(row)
 
 # Read JSON
-with open(input_file, 'r') as file:
+with open(input_file, 'r', encoding='utf-8') as file:
     json_data = json.load(file)
 
 # Calculate accumulated distance and absolute positions

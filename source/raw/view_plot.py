@@ -10,8 +10,10 @@ fig = plt.figure(figsize=(12, 8))  # Adjust the size as needed
 ax = fig.add_subplot(111, projection='3d')
 
 # Function to plot data for all routes
-def plot_all_routes(x_range=None, y_range=None, z_range=None, aspect_ratio=[1, 1, 1]):
+def plot_all_routes(route_range=None, x_range=None, y_range=None, z_range=None, aspect_ratio=[1, 1, 1], legend_range=None):
     routes = df['Debug Name'].unique()
+    if route_range:
+        routes = routes[route_range[0]:route_range[1]]
     for route in routes:
         route_data = df[df['Debug Name'] == route]
         ax.plot(route_data['Absolute X'], route_data['Absolute Y'], route_data['Absolute Z'], label=route)
@@ -31,14 +33,18 @@ def plot_all_routes(x_range=None, y_range=None, z_range=None, aspect_ratio=[1, 1
     # Set box aspect ratio
     ax.set_box_aspect(aspect_ratio)
     
-    ax.legend()
+    # Set legend range
+    ax.legend(loc='upper left', fontsize=5)
+
     plt.show()
 
 # Specify the ranges for each axis
+route_range = [0, 100]  # Display Range
 x_range = [-3000, 1500]
 y_range = [-3000, 3000]
 z_range = [0, 200]
-aspect_ratio = [4, 4, 1]  # Adjust the aspect ratio as needed (e.g., [3, 3, 1] for a rectangular prism)
+aspect_ratio = [4, 4, 1]  # Adjust the aspect ratio as needed
 
 # Plot all routes with specified ranges and aspect ratio
-plot_all_routes(x_range, y_range, z_range, aspect_ratio)
+plot_all_routes(route_range, x_range, y_range, z_range, aspect_ratio)
+
