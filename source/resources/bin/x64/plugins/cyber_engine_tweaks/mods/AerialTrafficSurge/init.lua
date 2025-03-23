@@ -18,10 +18,10 @@ ATS = {
     setting_path = "user_settings.json",
     native_settings_required_version = 1.96,
     delay_updating_native_settings = 0.1,
-    max_number_of_av = 27,
+    max_number_of_av = 32,
     default_setting_table = {
         version = "",
-        number_of_av = 27,
+        number_of_av = 32,
     },
     -- dynamic --
     debug_obj = nil,
