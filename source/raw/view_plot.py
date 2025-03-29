@@ -39,7 +39,7 @@ def plot_all_routes(route_range=None, x_range=None, y_range=None, z_range=None, 
     plt.show()
 
 # Specify the ranges for each axis
-route_range = [50, 100]  # Display Range
+route_range = [0, 100]  # Display Range
 x_range = [-3000, 1500]
 y_range = [-3000, 3000]
 z_range = [0, 200]
