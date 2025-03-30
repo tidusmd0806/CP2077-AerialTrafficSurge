@@ -11,7 +11,7 @@ local Debug = require('Debug/debug.lua')
 ATS = {
     -- static --
     description = "Aerial Traffic Surge",
-    version = "1.1.0",
+    version = "1.1.1",
     is_ready = false,
     is_debug_mode = false,
     is_update_version = false,
@@ -73,11 +73,17 @@ registerForEvent('onInit', function()
         if saved_version ~= current_version then
             Game.GetQuestsSystem():SetFactStr("ats_av_traffic_version", current_version)
             ATS.is_update_version = true
-        else
-            ATS.is_update_version = false
+        end
+
+        local saved_number_of_av = Game.GetQuestsSystem():GetFactStr("ats_av_traffic_number_of_av")
+        local current_number_of_av = ATS.setting_table.number_of_av
+        if saved_number_of_av ~= current_number_of_av then
+            Game.GetQuestsSystem():SetFactStr("ats_av_traffic_number_of_av", current_number_of_av)
+            ATS.is_update_version = true
         end
 
         if ATS.is_update_version or not IsTrafficLoop() then
+            ATS.is_update_version = false
             StartLoop()
         end
     end)
@@ -250,6 +256,7 @@ function CreateNativeSettingsPage()
 	table.insert(ATS.option_table_list, option_table)
 
     option_table = ATS.native_settings_mod.addButton("/ATS/general", GetLocalizedText(LocKeyToString("ats-general-apply-settings")), GetLocalizedText(LocKeyToString("ats-general-apply-settings-description")), GetLocalizedText(LocKeyToString("ats-general-apply-settings-button-label")), 45, function()
+        Game.GetQuestsSystem():SetFactStr("ats_av_traffic_number_of_av", ATS.setting_table.number_of_av)
         StartLoop()
     end)
     table.insert(ATS.option_table_list, option_table)
@@ -333,6 +340,22 @@ end
 
 function ATS:ToggleDebugMode()
     ATS.is_debug_mode = not ATS.is_debug_mode
+end
+
+function ATS:SetNumberOfAV(number)
+    if type(number) ~= "number" or number < 0 or number > ATS.max_number_of_av or math.floor(number) ~= number then
+        print("SetNumberOfAV must be an integer from 0 to " .. ATS.max_number_of_av)
+        return
+    end
+    ATS.setting_table.number_of_av = number
+    WriteJson(ATS.setting_path, ATS.setting_table)
+    Cron.After(ATS.delay_updating_native_settings, function()
+        UpdateNativeSettingsPage()
+    end)
+end
+
+function ATS:GetNumberOfAV()
+    return Game.GetQuestsSystem():GetFactStr("ats_av_traffic_number_of_av")
 end
 
 return ATS
