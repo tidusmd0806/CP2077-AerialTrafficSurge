@@ -11,16 +11,16 @@ local Debug = require('Debug/debug.lua')
 ATS = {
     -- static --
     description = "Aerial Traffic Surge",
-    version = "1.1.1",
+    version = "1.2.0",
     is_ready = false,
     is_debug_mode = false,
     is_update_version = false,
-    setting_path = "user_settings.json",
     native_settings_required_version = 1.96,
     delay_updating_native_settings = 0.1,
     max_number_of_av = 50,
     default_setting_table = {
         version = "",
+        game_version = "",
         number_of_av = 50,
     },
     -- dynamic --
@@ -57,8 +57,9 @@ registerForEvent('onInit', function()
 
     ATS.debug_obj = Debug:New()
 
-    LoadSettings()
-    SetParameter()
+    -- Settings live in the per-save fact DB; this table is just the in-memory UI mirror.
+    ATS.setting_table = { version = ATS.version, game_version = "", number_of_av = ATS.default_setting_table.number_of_av }
+
     CheckNativeSettings()
 
     GameUI.Observe("SessionStart", function()
@@ -76,9 +77,25 @@ registerForEvent('onInit', function()
         end
 
         local saved_number_of_av = Game.GetQuestsSystem():GetFactStr("ats_av_traffic_number_of_av")
-        local current_number_of_av = ATS.setting_table.number_of_av
-        if saved_number_of_av ~= current_number_of_av then
-            Game.GetQuestsSystem():SetFactStr("ats_av_traffic_number_of_av", current_number_of_av)
+        if ATS.is_update_version then
+            -- New save or version change: seed the fact from the current setting.
+            if saved_number_of_av ~= ATS.setting_table.number_of_av then
+                Game.GetQuestsSystem():SetFactStr("ats_av_traffic_number_of_av", ATS.setting_table.number_of_av)
+            end
+        elseif saved_number_of_av ~= ATS.setting_table.number_of_av then
+            -- Per-save fact is the source of truth: sync the UI to it.
+            ATS.setting_table.number_of_av = saved_number_of_av
+            if ATS.is_valid_native_settings then
+                UpdateNativeSettingsPage()
+            end
+        end
+
+        local game_version_str = Game.GetSystemRequestsHandler():GetGameVersion()
+        ATS.setting_table.game_version = game_version_str
+        local saved_game_version = Game.GetQuestsSystem():GetFactStr("ats_av_traffic_game_version")
+        local current_game_version = VersionToInt(game_version_str)
+        if saved_game_version ~= current_game_version then
+            Game.GetQuestsSystem():SetFactStr("ats_av_traffic_game_version", current_game_version)
             ATS.is_update_version = true
         end
 
@@ -158,26 +175,6 @@ function ManageNumberOfAV()
     end
 end
 
-function LoadSettings()
-    local table = ReadJson(ATS.setting_path)
-    if table == nil then
-        ATS.setting_table = {}
-    else
-        ATS.setting_table = table
-    end
-end
-
-function SetParameter()
-    if ATS.setting_table.version == nil or ATS.setting_table.version ~= ATS.version then
-        ATS.setting_table.version = ATS.version
-        WriteJson(ATS.setting_path, ATS.setting_table)
-    end
-    if ATS.setting_table.number_of_av == nil then
-        ATS.setting_table.number_of_av = ATS.default_setting_table.number_of_av
-        WriteJson(ATS.setting_path, ATS.setting_table)
-    end
-end
-
 function CheckNativeSettings()
     ATS.native_settings_mod = GetMod("nativeSettings")
     if ATS.native_settings_mod == nil then
@@ -248,7 +245,6 @@ function CreateNativeSettingsPage()
 	-- general
     option_table = ATS.native_settings_mod.addRangeInt("/ATS/general", GetLocalizedText(LocKeyToString("ats-general-number-of-av-item")), GetLocalizedText(LocKeyToString("ats-general-number-of-av-description")), 0, ATS.max_number_of_av, 1, ATS.setting_table.number_of_av, ATS.default_setting_table.number_of_av, function(value)
         ATS.setting_table.number_of_av = value
-        WriteJson(ATS.setting_path, ATS.setting_table)
         Cron.After(ATS.delay_updating_native_settings, function()
 			UpdateNativeSettingsPage()
 		end)
@@ -289,49 +285,6 @@ function ResetParameters()
 	end
     ATS.setting_table = ATS.default_setting_table
     ATS.setting_table.version = ATS.version
-    WriteJson(ATS.setting_path, ATS.setting_table)
-end
-
---- Read json file.
-function ReadJson(fill_path)
-    local success, result = pcall(function()
-       local file = io.open(fill_path, "r")
-       if file then
-            local contents = file:read("*a")
-            local data = json.decode(contents)
-            file:close()
-            return data
-       else
-            print("[ATS][Info] File not found: " .. fill_path)
-            return {}
-       end
-    end)
-    if not success then
-        print("[ATS][Error] Unexpected error while reading file: " .. fill_path)
-        return nil
-    end
-    return result
-end
-
---- Write json file.
-function WriteJson(fill_path, write_data)
-local success, result = pcall(function()
-    local file = io.open(fill_path, "w")
-    if file then
-        local contents = json.encode(write_data)
-        file:write(contents)
-        file:close()
-        return true
-    else
-        print("[ATS][Error] Failed to write file: " .. fill_path)
-        return false
-    end
-end)
-if not success then
-    print("[ATS][Error] Unexpected error while writing file: " .. fill_path)
-    return false
-end
-return result
 end
 
 function ATS:GetVersion()
@@ -348,7 +301,6 @@ function ATS:SetNumberOfAV(number)
         return
     end
     ATS.setting_table.number_of_av = number
-    WriteJson(ATS.setting_path, ATS.setting_table)
     Cron.After(ATS.delay_updating_native_settings, function()
         UpdateNativeSettingsPage()
     end)

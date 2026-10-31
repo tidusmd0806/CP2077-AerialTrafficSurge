@@ -29,7 +29,9 @@ function Debug:ImGuiMain()
 
     ImGui.Begin("ATS DEBUG WINDOW")
     ImGui.Text("Version : " .. ATS.version)
+    ImGui.Text("Game Version : " .. ATS.setting_table.game_version)
     ImGui.Text("Saved Version : " .. Game.GetQuestsSystem():GetFactStr("ats_av_traffic_version"))
+    ImGui.Text("Saved Game Version : " .. Game.GetQuestsSystem():GetFactStr("ats_av_traffic_game_version"))
     ImGui.Text("Saved Number of AV : " .. Game.GetQuestsSystem():GetFactStr("ats_av_traffic_number_of_av"))
 
     self:SetObserver()
@@ -251,10 +253,6 @@ function Debug:ImGuiExcuteFunction()
     if ImGui.Button("Stop") then
         StopLoop()
         print("Loop Stop")
-    end
-    if ImGui.Button("Delete Settings") then
-        io.open(ATS.setting_path, "w"):close()
-        print("Delete Settings")
     end
 
 end
